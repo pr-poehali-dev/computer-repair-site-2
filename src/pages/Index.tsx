@@ -81,36 +81,33 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+    <div className="min-h-screen bg-white">
+      <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Icon name="Wrench" size={32} className="text-primary" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-              TechRepair
-            </h1>
+          <div className="flex items-center gap-3">
+            <img src="https://cdn.poehali.dev/files/vk_av_new_crds.png" alt="SmartBook" className="h-12" />
           </div>
           <nav className="hidden md:flex gap-6">
             <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
             <a href="#price" className="hover:text-primary transition-colors">Прайс</a>
             <a href="#contact" className="hover:text-primary transition-colors">Контакты</a>
           </nav>
-          <Button onClick={() => setIsBookingOpen(true)} className="bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+          <Button onClick={() => setIsBookingOpen(true)} className="bg-secondary text-white hover:bg-secondary/90">
             <Icon name="Calendar" size={18} className="mr-2" />
             Записаться
           </Button>
         </div>
       </header>
 
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-gradient-to-br from-yellow-50 to-white">
         <div className="container mx-auto text-center animate-fade-in">
-          <Badge className="mb-6 bg-gradient-to-r from-primary to-secondary text-white border-0">
+          <Badge className="mb-6 bg-primary text-secondary border-0 font-bold">
             Экспресс-диагностика бесплатно
           </Badge>
-          <h2 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+          <h2 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-secondary">
             Ремонт техники
             <br />
-            <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+            <span className="text-primary">
               любой сложности
             </span>
           </h2>
@@ -121,7 +118,7 @@ const Index = () => {
             <Button 
               size="lg" 
               onClick={() => setIsBookingOpen(true)}
-              className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg px-8"
+              className="bg-primary text-secondary hover:bg-primary/90 text-lg px-8 font-bold"
             >
               Онлайн-запись
               <Icon name="ArrowRight" size={20} className="ml-2" />
@@ -133,18 +130,18 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 max-w-4xl mx-auto">
-            <div className="p-6 rounded-xl bg-white/60 backdrop-blur-sm border border-purple-100">
-              <Icon name="Clock" size={40} className="mx-auto mb-3 text-primary" />
+            <div className="p-6 rounded-xl bg-white border-2 border-gray-100 hover:border-primary transition-all">
+              <Icon name="Clock" size={40} className="mx-auto mb-3 text-secondary" />
               <h3 className="font-bold text-lg mb-2">Быстро</h3>
               <p className="text-muted-foreground">Ремонт от 30 минут</p>
             </div>
-            <div className="p-6 rounded-xl bg-white/60 backdrop-blur-sm border border-blue-100">
+            <div className="p-6 rounded-xl bg-white border-2 border-gray-100 hover:border-primary transition-all">
               <Icon name="BadgeCheck" size={40} className="mx-auto mb-3 text-secondary" />
               <h3 className="font-bold text-lg mb-2">Надежно</h3>
               <p className="text-muted-foreground">Гарантия до 12 месяцев</p>
             </div>
-            <div className="p-6 rounded-xl bg-white/60 backdrop-blur-sm border border-orange-100">
-              <Icon name="Award" size={40} className="mx-auto mb-3 text-accent" />
+            <div className="p-6 rounded-xl bg-white border-2 border-gray-100 hover:border-primary transition-all">
+              <Icon name="Award" size={40} className="mx-auto mb-3 text-secondary" />
               <h3 className="font-bold text-lg mb-2">Профессионально</h3>
               <p className="text-muted-foreground">Опыт работы 9+ лет</p>
             </div>
@@ -166,15 +163,15 @@ const Index = () => {
                 className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/50"
               >
                 <CardHeader>
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Icon name={service.icon as any} size={32} className="text-white" />
+                  <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Icon name={service.icon as any} size={32} className="text-secondary" />
                   </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                   <CardDescription className="text-base">{service.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-primary">{service.price}</span>
+                    <span className="text-2xl font-bold text-secondary">{service.price}</span>
                     <Button variant="ghost" size="sm">
                       Подробнее
                       <Icon name="ChevronRight" size={16} className="ml-1" />
@@ -187,7 +184,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="price" className="py-20 px-4 bg-gradient-to-br from-purple-50 to-blue-50">
+      <section id="price" className="py-20 px-4 bg-gradient-to-br from-yellow-50 to-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Прайс-лист</h2>
@@ -203,14 +200,14 @@ const Index = () => {
                     className="flex justify-between items-center p-4 hover:bg-muted/50 transition-colors"
                   >
                     <span className="font-medium">{item.service}</span>
-                    <span className="text-lg font-bold text-primary">{item.price}</span>
+                    <span className="text-lg font-bold text-secondary">{item.price}</span>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
           
-          <div className="mt-8 p-6 bg-gradient-to-r from-primary to-secondary rounded-2xl text-white text-center">
+          <div className="mt-8 p-6 bg-secondary rounded-2xl text-white text-center">
             <Icon name="Info" size={32} className="mx-auto mb-3" />
             <p className="text-lg font-medium">
               Точная стоимость определяется после диагностики. Диагностика бесплатная!
@@ -228,7 +225,7 @@ const Index = () => {
           <Button 
             size="lg" 
             onClick={() => setIsBookingOpen(true)}
-            className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg px-12 py-6"
+            className="bg-primary text-secondary hover:bg-primary/90 text-lg px-12 py-6 font-bold"
           >
             <Icon name="Calendar" size={24} className="mr-2" />
             Записаться онлайн
@@ -236,7 +233,7 @@ const Index = () => {
           
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <Icon name="MapPin" size={32} className="mx-auto mb-3 text-primary" />
+              <Icon name="MapPin" size={32} className="mx-auto mb-3 text-secondary" />
               <h3 className="font-bold mb-2">Адрес</h3>
               <p className="text-muted-foreground">г. Москва, ул. Ленина, 123</p>
             </div>
@@ -246,7 +243,7 @@ const Index = () => {
               <p className="text-muted-foreground">+7 (999) 123-45-67</p>
             </div>
             <div>
-              <Icon name="Clock" size={32} className="mx-auto mb-3 text-accent" />
+              <Icon name="Clock" size={32} className="mx-auto mb-3 text-secondary" />
               <h3 className="font-bold mb-2">Режим работы</h3>
               <p className="text-muted-foreground">Пн-Пт: 9:00 - 20:00<br />Сб-Вс: 10:00 - 18:00</p>
             </div>
@@ -254,13 +251,12 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="bg-gray-900 text-white py-8 px-4">
+      <footer className="bg-secondary text-white py-8 px-4">
         <div className="container mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Icon name="Wrench" size={24} />
-            <span className="font-bold text-xl">TechRepair</span>
+            <img src="https://cdn.poehali.dev/files/vk_av_new_crds.png" alt="SmartBook" className="h-8 brightness-0 invert" />
           </div>
-          <p className="text-gray-400">© 2024 TechRepair. Все права защищены.</p>
+          <p className="text-gray-300">© 2024 SmartBook. Магазин компьютерной техники</p>
         </div>
       </footer>
 
@@ -318,7 +314,7 @@ const Index = () => {
             
             <Button 
               onClick={handleBooking} 
-              className="w-full bg-gradient-to-r from-primary to-secondary"
+              className="w-full bg-primary text-secondary hover:bg-primary/90 font-bold"
               size="lg"
             >
               Подтвердить запись
