@@ -1,0 +1,27 @@
+{
+  "tests": [
+    {
+      "name": "Get all bookings",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedStatus": 200
+    },
+    {
+      "name": "Create new booking",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "client_name": "Иван Иванов",
+        "client_phone": "+79991234567",
+        "client_email": "ivan@test.com",
+        "booking_date": "2026-01-25",
+        "booking_time": "14:00",
+        "service_type": "Ремонт ноутбука",
+        "notes": "Не включается"
+      },
+      "expectedStatus": 201,
+      "expectedStatus": 201
+    }
+  ]
+}

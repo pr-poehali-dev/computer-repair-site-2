@@ -1,16 +1,27 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar } from '@/components/ui/calendar';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
+const API_URL = 'https://functions.poehali.dev/18fc91f7-34ba-4d60-809b-e05bc70f0b7a';
+
 const Index = () => {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [clientName, setClientName] = useState('');
+  const [clientPhone, setClientPhone] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [serviceType, setServiceType] = useState('');
+  const [notes, setNotes] = useState('');
 
   const services = [
     {
@@ -66,18 +77,51 @@ const Index = () => {
     '09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00', '18:00'
   ];
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (!selectedDate || !selectedTime) {
       toast.error('Выберите дату и время');
       return;
     }
-    
-    toast.success('Заявка отправлена!', {
-      description: `Вы записаны на ${selectedDate.toLocaleDateString('ru-RU')} в ${selectedTime}`
-    });
-    setIsBookingOpen(false);
-    setSelectedDate(undefined);
-    setSelectedTime(null);
+
+    if (!clientName || !clientPhone) {
+      toast.error('Заполните имя и телефон');
+      return;
+    }
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          client_name: clientName,
+          client_phone: clientPhone,
+          client_email: clientEmail,
+          booking_date: selectedDate.toISOString().split('T')[0],
+          booking_time: selectedTime,
+          service_type: serviceType,
+          notes: notes
+        })
+      });
+
+      if (response.ok) {
+        toast.success('Заявка отправлена!', {
+          description: `Вы записаны на ${selectedDate.toLocaleDateString('ru-RU')} в ${selectedTime}`
+        });
+        setIsBookingOpen(false);
+        setSelectedDate(undefined);
+        setSelectedTime(null);
+        setClientName('');
+        setClientPhone('');
+        setClientEmail('');
+        setServiceType('');
+        setNotes('');
+      } else {
+        toast.error('Ошибка отправки заявки');
+      }
+    } catch (error) {
+      toast.error('Ошибка соединения');
+      console.error(error);
+    }
   };
 
   return (
@@ -300,15 +344,81 @@ const Index = () => {
             )}
             
             {selectedDate && selectedTime && (
-              <div className="p-4 bg-muted rounded-lg animate-scale-in">
-                <p className="text-sm text-muted-foreground mb-2">Вы выбрали:</p>
-                <p className="font-semibold text-lg">
-                  {selectedDate.toLocaleDateString('ru-RU', { 
-                    day: 'numeric', 
-                    month: 'long', 
-                    year: 'numeric' 
-                  })} в {selectedTime}
-                </p>
+              <div className="space-y-4 animate-fade-in">
+                <div className="p-4 bg-muted rounded-lg">
+                  <p className="text-sm text-muted-foreground mb-2">Вы выбрали:</p>
+                  <p className="font-semibold text-lg">
+                    {selectedDate.toLocaleDateString('ru-RU', { 
+                      day: 'numeric', 
+                      month: 'long', 
+                      year: 'numeric' 
+                    })} в {selectedTime}
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <Label htmlFor="clientName">Ваше имя *</Label>
+                    <Input
+                      id="clientName"
+                      value={clientName}
+                      onChange={(e) => setClientName(e.target.value)}
+                      placeholder="Иван Иванов"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="clientPhone">Телефон *</Label>
+                    <Input
+                      id="clientPhone"
+                      type="tel"
+                      value={clientPhone}
+                      onChange={(e) => setClientPhone(e.target.value)}
+                      placeholder="+7 (999) 123-45-67"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="clientEmail">Email</Label>
+                    <Input
+                      id="clientEmail"
+                      type="email"
+                      value={clientEmail}
+                      onChange={(e) => setClientEmail(e.target.value)}
+                      placeholder="ivan@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="serviceType">Тип услуги</Label>
+                    <Select value={serviceType} onValueChange={setServiceType}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Выберите услугу" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Ремонт ноутбуков">Ремонт ноутбуков</SelectItem>
+                        <SelectItem value="Ремонт ПК">Ремонт ПК</SelectItem>
+                        <SelectItem value="Ремонт телефонов">Ремонт телефонов</SelectItem>
+                        <SelectItem value="Восстановление данных">Восстановление данных</SelectItem>
+                        <SelectItem value="Настройка сетей">Настройка сетей</SelectItem>
+                        <SelectItem value="Удаление вирусов">Удаление вирусов</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="notes">Описание проблемы</Label>
+                    <Textarea
+                      id="notes"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Опишите вашу проблему..."
+                      rows={3}
+                    />
+                  </div>
+                </div>
               </div>
             )}
             
@@ -316,6 +426,7 @@ const Index = () => {
               onClick={handleBooking} 
               className="w-full bg-primary text-secondary hover:bg-primary/90 font-bold"
               size="lg"
+              disabled={!selectedDate || !selectedTime}
             >
               Подтвердить запись
             </Button>
